@@ -5,9 +5,10 @@ from pathlib import Path
 from capturing.audio_file import AudioFile
 from capturing.two_channel import TwoChannel
 
-from ..config import Config
+from config import Config
 
-class RunStrategy():
+
+class RunStrategy:
     def __init__(self, configuration: Config):
         self.config = configuration
 

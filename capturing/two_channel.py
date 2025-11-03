@@ -7,9 +7,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 class TwoChannel:
-    def __init__(self, capture_dir, timestamp) -> None:
+    def __init__(self, audio_dir, timestamp) -> None:
         self.timestamp = timestamp
-        self.capture_dir = str(Path(capture_dir).expanduser())
+        self.audio_dir = Path(audio_dir)
         self.mic_source = "alsa_input.usb-Blue_Microphones_Yeti_Stereo_Microphone_797_2021_05_05_40752-00.analog-stereo"
         self.monitor_source = "alsa_output.usb-Nuforce_Inc._NuForce_USB_Audio-01.analog-stereo.monitor"
 
@@ -20,8 +20,11 @@ class TwoChannel:
 
         Returns 2 file paths, one for each channel.
         """
-        mic_wav_path = f"{self.capture_dir}/{self.timestamp}_mic.wav"
-        monitor_wav_path = f"{self.capture_dir}/{self.timestamp}_monitor.wav"
+        # Ensure audio directory exists
+        self.audio_dir.mkdir(parents=True, exist_ok=True)
+        
+        mic_wav_path = str(self.audio_dir / "mic.wav")
+        monitor_wav_path = str(self.audio_dir / "monitor.wav")
 
         cmd = [
             "ffmpeg",
