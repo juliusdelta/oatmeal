@@ -22,6 +22,7 @@ class Config:
         self.audio_dir = self.session_dir / "audio"
         self.transcriptions_dir = self.session_dir / "transcriptions"
         self.final_transcription_path = self.session_dir / "transcription.json"
+        self.enhanced_transcription_path = self.session_dir / "enhanced_transcription.json"
         
         # Create directories
         self.audio_dir.mkdir(parents=True, exist_ok=True)
@@ -31,6 +32,9 @@ class Config:
         self.audio_file_path = audio_file_path
         self.diarize = diarize
         self.skip_capture = bool(audio_file_path)
+        
+        # Track session start time for duration calculation
+        self.session_start_time = datetime.now()
 
         # Capturer and Transcriber configuration
         self.capturer = self.set_capturer(audio_file_path)
@@ -79,3 +83,24 @@ class Config:
         except Exception as e:
             logger.error(f"Error saving final transcription: {e}")
             raise
+
+    def save_enhanced_transcription(self, data):
+        """Save the enhanced transcription format"""
+        try:
+            with open(self.enhanced_transcription_path, "w", encoding="utf-8") as file:
+                json.dump(data, file, ensure_ascii=False, indent=4)
+            logger.info(f"Enhanced transcription saved to {self.enhanced_transcription_path}")
+            return self.enhanced_transcription_path
+        except Exception as e:
+            logger.error(f"Error saving enhanced transcription: {e}")
+            raise
+
+    def generate_session_metadata(self) -> dict:
+        """Generate session-level metadata for enhanced format"""
+        session_end_time = datetime.now()
+        duration_seconds = (session_end_time - self.session_start_time).total_seconds()
+        
+        return {
+            "timestamp": self.timestamp,
+            "duration_seconds": round(duration_seconds, 2)
+        }
