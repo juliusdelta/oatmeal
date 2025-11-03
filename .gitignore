@@ -11,3 +11,4 @@ wheels/
 
 # Test data for local dev
 test-data/
+.opencode/

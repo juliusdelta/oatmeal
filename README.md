@@ -3,6 +3,14 @@
 > [!WARNING]
 > This is still a work in progress but hopefully this will make it easy to automate transcribing/diarization all completely locally
 
+## TODO
+- [ ] Config file location
+- [ ] Audio file path - skip capture
+- [ ] Audio Capture Output Dir
+- [ ] Transcription Output Dir
+- [ ] Transcription Output Formats - JSON, Markdown, Org
+- [ ] Oatmeal Run Strategy - Two Channel Transcribe Only or Full diarization
+
 ## Requirements
 - uv
 - ffmpeg

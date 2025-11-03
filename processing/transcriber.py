@@ -1,5 +1,6 @@
 import torch
 import logging
+from typing import Dict, List
 from faster_whisper import WhisperModel
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
@@ -9,7 +10,7 @@ class FastWhisperTranscriber:
     def __init__(self, model_name="tiny"):
         self.whisper_model = WhisperModel(model_name, device="cpu", compute_type="int8")
 
-    def transcribe(self, audio_path: str) -> tuple:
+    def transcribe(self, audio_path: str) -> tuple[str, List[Dict]]:
         segments, _ = self.whisper_model.transcribe(audio_path)
         transcription = []
         transcription_with_timestamps = []

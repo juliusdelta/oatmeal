@@ -1,5 +1,7 @@
-from .ffmpeg import Ffmpeg
+from .audio_file import AudioFile
+from .two_channel import TwoChannel
 
 __all__ = [
-    'Ffmpeg',
+    'AudioFile',
+    'TwoChannel',
 ]
